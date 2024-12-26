@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COBN Shopping Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .checkout-container {
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-header {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .cart-items-container {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-item button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .cart-item button:hover {
+            background-color: #d32f2f;
+        }
+
+        .total-price {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .exit-btn, .checkout-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .exit-btn {
+            background-color: #f44336;
+        }
+
+        .exit-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .checkout-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Cart popup styles */
+        .cart-popup {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            width: 300px;
+            z-index: 100;
+        }
+
+        .cart-popup.active {
+            display: block;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .checkout-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Hoodies Vibe</div>
+        <ul>
+            <li class="profile-icon" id="profile-icon">
+                <i class="fas fa-user-circle"></i>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <ul>
+                        <li><a href="login.html" id="login-option">Login</a></li>
+                        <li><a href="register.html" id="register-option">Sign Up</a></li>
+                        <li><a href="profile.html" id="profile-option" style="display:none;">User Profile</a></li>
+                        <li><a href="#" id="logout-option" style="display:none;" onclick="logout()">Log Out</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </header>
+
+    <div class="navbar">
+        <a href="#" class="logo"> Hoodies Vibe</a>
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">Contact</a>
+        <span class="winter-edition">Winter Edition</span>
+        <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </div>
+    </div>
+
+    <main>
+        <section id="home">
+            <h1>Welcome to Hoodies Vibe</h1>
+            <p>Your one-stop shop for the best products!</p>
+        </section>
+
+        <section id="products">
+            <h2>Our Hoodies</h2>
+            <div class="product-list">
+                <!-- Product list is dynamically generated -->
+                <section id="products">
+                 
+                    <div class="product-list">
+                        <div class="product red-hoodie">
+                            <img src="product1.jpg" alt="Red Hoodie">
+                            <h3>Red Hoodie</h3>
+                            <p>$25.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product blue-hoodie">
+                            <img src="product2.jpg" alt="Blue Hoodie">
+                            <h3>Blue Hoodie</h3>
+                            <p>$30.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product black-hoodie">
+                            <img src="product3.jpg" alt="Black Hoodie">
+                            <h3>Black Hoodie</h3>
+                            <p>$28.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product green-hoodie">
+                            <img src="product4.jpg" alt="Green Hoodie">
+                            <h3>Green Hoodie</h3>
+                            <p>$32.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product gray-hoodie">
+                            <img src="product5.jpg" alt="Gray Hoodie">
+                            <h3>Gray Hoodie</h3>
+                            <p>$26.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product purple-hoodie">
+                            <img src="product6.jpg" alt="Purple Hoodie">
+                            <h3>Purple Hoodie</h3>
+                            <p>$35.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product yellow-hoodie">
+                            <img src="product7.jpg" alt="Yellow Hoodie">
+                            <h3>Yellow Hoodie</h3>
+                            <p>$27.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product white-hoodie">
+                            <img src="product8.jpg" alt="White Hoodie">
+                            <h3>White Hoodie</h3>
+                            <p>$24.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product pink-hoodie">
+                            <img src="product9.jpg" alt="Pink Hoodie">
+                            <h3>Pink Hoodie</h3>
+                            <p>$29.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product orange-hoodie">
+                            <img src="product10.jpg" alt="Orange Hoodie">
+                            <h3>Orange Hoodie</h3>
+                            <p>$30.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product navy-hoodie">
+                            <img src="product11.jpg" alt="Navy Hoodie">
+                            <h3>Navy Hoodie</h3>
+                            <p>$33.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                        <div class="product tan-hoodie">
+                            <img src="product12.jpg" alt="Tan Hoodie">
+                            <h3>Tan Hoodie</h3>
+                            <p>$28.00</p>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </section>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li id="admin-link" style="display: none;"><a href="admin.html">Admin Dashboard</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+        
+        <script>
+            // Show admin link if the user is an admin
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.role === 'admin') {
+                document.getElementById('admin-link').style.display = 'block';
+            }
+        
+            // Logout function
+            function logout() {
+                localStorage.removeItem('user');
+                alert('Logged out');
+                window.location.href = 'login.html';
+            }
+        </script>
+        
+        <section id="about">
+            <h2>About Us</h2>
+            <p>COBN is dedicated to providing high-quality products at affordable prices. Our mission is to make shopping easy and enjoyable for everyone.</p>
+        </section>
+        <script>
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || user.role !== 'admin') {
+                alert('Access denied. Admins only.');
+                window.location.href = 'index.html';
+            }
+        </script>
+        
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Checkout Page -->
+    <div class="checkout-container">
+        <div class="checkout-header">Checkout</div>
+
+        <div class="cart-items-container" id="cart-items-container">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+
+        <div class="total-price" id="total-price">
+            <!-- Total price will be displayed here -->
+        </div>
+
+        <button class="exit-btn" onclick="exitCheckout()">Exit</button>
+        <button class="checkout-btn" onclick="completeCheckout()">Complete Checkout</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 COBN. All rights reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        // Profile Dropdown Toggle
+        document.getElementById('profile-icon').addEventListener('click', function() {
+            document.getElementById('profile-dropdown').classList.toggle('active');
+        });
+
+        // Check if the user is logged in
+        function isLoggedIn() {
+            return localStorage.getItem('user') !== null;
+        }
+
+        // Update profile menu based on login status
+        function updateProfileMenu() {
+            const isLogged = isLoggedIn();
+            
+            if (isLogged) {
+                document.getElementById('login-option').style.display = 'none';
+                document.getElementById('register-option').style.display = 'none';
+                document.getElementById('profile-option').style.display = 'block';
+                document.getElementById('logout-option').style.display = 'block';
+            } else {
+                document.getElementById('login-option').style.display = 'block';
+                document.getElementById('register-option').style.display = 'block';
+                document.getElementById('profile-option').style.display = 'none';
+                document.getElementById('logout-option').style.display = 'none';
+            }
+        }
+
+        // Call this function to set the correct profile options on page load
+        updateProfileMenu();
+
+        // Logout function to clear user data and update the menu
+        function logout() {
+            localStorage.removeItem('user');
+            alert('You have been logged out!');
+            window.location.href = 'index.html'; // Redirect to home page after logout
+        }
+
+        // Cart functionality
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', event => {
+                const productElement = event.target.closest('.product');
+                const productName = productElement.querySelector('h3').textContent;
+                const productPrice = productElement.querySelector('p').textContent;
+
+                // Add product to cart
+                cart.push({ name: productName, price: productPrice });
+
+                // Update localStorage and display
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay(); // Update the cart display
+            });
+        });
+
+        function updateCartDisplay() {
+            const cartCount = document.querySelector('.cart-count');
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const totalPriceElement = document.getElementById('total-price');
+            cartItemsContainer.innerHTML = '';
+            let totalPrice = 0;
+
+            cartCount.textContent = cart.length;
+            cart.forEach((product, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <span>${product.name} - ${product.price}</span>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+
+                const price = parseFloat(product.price.replace('$', ''));
+                totalPrice += price;
+            });
+
+            totalPriceElement.textContent = 'Total: $' + totalPrice.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to localStorage
+            updateCartDisplay(); // Update the display
+        }
+
+        function exitCheckout() {
+            window.location.href = 'index.html'; // Redirect to home page after exiting
+        }
+
+        function completeCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Please add items before completing checkout.');
+            } else {
+                alert('Checkout complete! Thank you for your purchase.');
+                localStorage.removeItem('cart'); // Clear cart after checkout
+                window.location.href = 'index.html'; // Redirect to homepage
+            }
+        }
+
+        // Initialize cart from localStorage if it exists, otherwise empty array
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartDisplay() {
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = cart.length;  // Update the count
+            if (cart.length === 0) {
+                cartCount.style.display = 'none';  // Hide the cart count if empty
+            } else {
+                cartCount.style.display = 'flex';  // Show the cart count if not empty
+            }
+        }
+
+        // Example: Adding a sample product
+        const sampleProduct = {
+            name: 'Winter Jacket',
+            price: 99.99
+        };
+
+        // Adding sample product to cart
+        addToCart(sampleProduct);
+
+
+        // Cart functionality
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', event => {
+        const productElement = event.target.closest('.product');
+        const productName = productElement.querySelector('h3').textContent;
+        const productPrice = productElement.querySelector('p').textContent;
+
+        // Add product to cart
+        cart.push({ name: productName, price: productPrice });
+
+        // Update localStorage and display
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartDisplay(); // Update the cart display
+    });
+});
+
+function updateCartDisplay() {
+    const cartCount = document.querySelector('.cart-count');
+    const cartPopup = document.querySelector('.cart-popup');
+    const cartItems = cartPopup.querySelectorAll('.cart-item');
+
+    // Update cart count in the header
+    cartCount.textContent = cart.length;
+
+    // Remove all old cart items in the popup
+    cartItems.forEach(item => item.remove());
+
+    // Show empty cart message or display cart items
+    if (cart.length === 0) {
+        cartPopup.querySelector('.empty-cart').style.display = 'block';
+    } else {
+        cartPopup.querySelector('.empty-cart').style.display = 'none';
+        cart.forEach(product => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = ` 
+                <span>${product.name}</span>
+                <span>${product.price}</span>
+            `;
+            cartPopup.insertBefore(cartItem, cartPopup.querySelector('.checkout-btn'));
+        });
+    }
+}
+
+// Initialize cart count on page load
+updateCartDisplay();
+
+    </script>
+    
+</body>
+</html>
